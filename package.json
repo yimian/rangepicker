@@ -2,7 +2,7 @@
   "name": "rangepicker",
   "version": "1.0.0",
   "description": "rangepicker component for Vue.js",
-  "main": "",
+  "main": "./dist/rangepicker.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
