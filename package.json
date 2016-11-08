@@ -1,5 +1,5 @@
 {
-  "name": "rangepicker",
+  "name": "vue-rangepicker",
   "version": "1.0.0",
   "description": "rangepicker component for Vue.js",
   "main": "./dist/rangepicker.js",
