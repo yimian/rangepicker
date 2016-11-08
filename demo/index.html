@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <link rel="stylesheet" href="./bootstrap.min.css">
+  <script src="./vue.js"></script>
+  <script src="../dist/rangepicker.js"></script>
+</head>
+<body>
+  <div id="rangepicker">
+    <label for="">选择时间：</label>
+    <rangepicker v-ref:rangepicker :adjust-by="adjustBy" :start-date.sync="startDate" :end-date.sync="endDate" :language="language" :absolute-option="absoluteOption"></rangepicker>
+  </div>
+  <script>
+    var app = new Vue({
+      el: '#rangepicker',
+      data: {
+        language: 'ch',
+        startDate: '',
+        endDate: '',
+        adjustBy: 'week',
+        absoluteOption: [
+            {'name': '上月', 'value': 1, 'unit': 'month', 'type': 'absolute', 'weekFormat': 'isoweek'},
+            {'name': '本季度', 'value': 0, 'unit': 'quarter', 'type': 'absolute', 'weekFormat': 'isoweek'}
+        ]
+      },
+      components: { rangepicker }
+    })
+  </script>
+</body>
+</html>
