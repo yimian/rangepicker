@@ -89,7 +89,7 @@
       language: {
         type: String,
         required: false,
-        default: 'en'
+        default: 'ch'
       },
       adjustBy: {
         type: String,

@@ -5,7 +5,7 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: {
-      "rangepicker": path.join(__dirname, dirs.src, "rangepicker.js"),
+      "rangepicker": path.join(__dirname, dirs.src, "rangepicker.vue"),
     },
     output: {
       path: path.join(__dirname, dirs.dist),
