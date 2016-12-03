@@ -1,9 +1,6 @@
 <style scoped lang='less'>
   .rangepicker {
-    max-width: 230px;
-    min-width: 150px;
     float: none;
-    display: inline-block;
   }
   .rangepicker-widget {
     position: absolute;
@@ -58,7 +55,7 @@
 </style>
 
 <template>
-  <div class="col-sm-6 col-xs-12 rangepicker">
+  <div class="rangepicker">
     <input type="text" class="form-control" @click="toggle_range_picker" value="{{ startDate + ' 至 ' + endDate }}">
     <div class="rangepicker-widget" v-show="toggleRangePicker" :style="coordinates">
       <div class="header">
