@@ -1,13 +1,13 @@
 <style scoped lang='less'>
   .rangepicker {
-    float: none;
+    position: relative;
+    width: 100%;
   }
   .rangepicker-widget {
-    position: absolute;
+    position: fixed;
     z-index: 1000;
     border: 1px solid #ccc;
     border-radius: 3px;
-    top:35px;
     background-color:#fff;
     .header {
       ul {
@@ -56,7 +56,7 @@
 
 <template>
   <div class="rangepicker">
-    <input type="text" class="form-control" @click="toggle_range_picker" value="{{ startDate + ' 至 ' + endDate }}">
+    <input type="text" class="form-control" @click="toggle_range_picker" value="{{ startDate + ' 至 ' + endDate }}" v-el:input>
     <div class="rangepicker-widget" v-show="toggleRangePicker" :style="coordinates">
       <div class="header">
         <ul class="nav nav-tabs nav-justified">
@@ -178,71 +178,76 @@
       }
     },
     watch: {
-      startDate(v) {
-        console.log(v);
-        this.endMin = this.startDate;
-      },
-      endDate(v) {
-        this.startMax = this.endDate;
-      },
+        startDate(v) {
+            this.endMin = this.startDate;
+        },
+        endDate(v) {
+            this.startMax = this.endDate;
+        },
     },
     ready() {
-      var self = this;
-      this.absoluteOption.map(function (option) {
-        self.options.absolute.push(option);
-      })
-      this.relativeOption.map(function (option) {
-        self.options.relative.push(option);
-      })
-      if(this.$el.parentNode.offsetWidth + this.$el.parentNode.offsetLeft - this.$el.offsetLeft <= 300){
-          this.coordinates = {right: '10', top: `${window.getComputedStyle(this.$el.children[0]).offsetHeight + 4}px`}
-      }else{
-          this.coordinates = {left: '10', top: `${window.getComputedStyle(this.$el.children[0]).offsetHeight + 4}px`}
-      }
-      window.addEventListener('click', this.close)
+        var self = this;
+        this.absoluteOption.map(function (option) {
+            self.options.absolute.push(option);
+        })
+        this.relativeOption.map(function (option) {
+            self.options.relative.push(option);
+        })
+
+        this.update_coords();
+        // 检测窗口是否变化，如果发生变化重新对下拉框进行定位
+        window.addEventListener('resize', this.update_coords);
+        window.addEventListener('scroll', this.update_coords);
+
+        window.addEventListener('click', this.close)
     },
     beforeDestroy() {
-      window.removeEventListener('click', this.close)
+        window.removeEventListener('click', this.close)
     },
     components: { datepicker },
     methods: {
-      adjustRangeBy(term) {
-        term = term || term in ['day', 'isoweek', 'month', 'quarter', 'year'] ? term : 'day';
-        this.startDate = moment(this.startDate).startOf(term).format(this.dateFormat);
-        this.endDate = moment(this.endDate).endOf(term).format(this.dateFormat);
-        if (moment(this.endDate) > moment()) {
-          this.endDate = moment().format(this.dateFormat);
-        }
-      },
-      toggle_range_picker() {
-        this.toggleRangePicker = !this.toggleRangePicker;
-      },
+        update_coords() {
+            var rect = this.$el.getBoundingClientRect();
+            var top = this.$els.input.offsetHeight + rect.top;
+            this.coordinates = {left: rect.left + 'px', width: rect.width + 'px', top: top + 'px'};
+        },
+        adjustRangeBy(term) {
+            term = term || term in ['day', 'isoweek', 'month', 'quarter', 'year'] ? term : 'day';
+            this.startDate = moment(this.startDate).startOf(term).format(this.dateFormat);
+            this.endDate = moment(this.endDate).endOf(term).format(this.dateFormat);
+            if (moment(this.endDate) > moment()) {
+                this.endDate = moment().format(this.dateFormat);
+            }
+        },
+        toggle_range_picker() {
+            this.toggleRangePicker = !this.toggleRangePicker;
+        },
 
-      switchTab() {
-        this.isActive = !this.isActive;
-      },
+        switchTab() {
+            this.isActive = !this.isActive;
+        },
 
-      close(e) {
-        // let rangepickerEl = this.$el.getElementsByClassName('rangepicker')[0];
-        if(!this.$el.contains(e.target)){
-          this.toggleRangePicker = false;
-        }
-      },
+        close(e) {
+            // let rangepickerEl = this.$el.getElementsByClassName('rangepicker')[0];
+            if(!this.$el.contains(e.target)){
+                this.toggleRangePicker = false;
+            }
+        },
 
-      changeDateRange(metric) {
-        if (metric.type === 'absolute') {
-          this.startDate = moment().startOf(metric.unit === 'week' ? metric.weekFormat : metric.unit).subtract(metric.value, metric.unit).format(this.dateFormat);
-          if (metric.value) {
-            this.endDate = moment().subtract(metric.value, metric.unit).endOf(metric.unit === 'week' ? metric.weekFormat : metric.unit).format(this.dateFormat);
-          } else {
-            this.endDate = moment().format(this.dateFormat);
-          }
-        } else if (metric.type === 'relative') {
-          this.startDate = moment().subtract(metric.value, metric.unit).format(this.dateFormat);
-          this.endDate = moment().format(this.dateFormat);
+        changeDateRange(metric) {
+            if (metric.type === 'absolute') {
+                this.startDate = moment().startOf(metric.unit === 'week' ? metric.weekFormat : metric.unit).subtract(metric.value, metric.unit).format(this.dateFormat);
+                if (metric.value) {
+                    this.endDate = moment().subtract(metric.value, metric.unit).endOf(metric.unit === 'week' ? metric.weekFormat : metric.unit).format(this.dateFormat);
+                } else {
+                    this.endDate = moment().format(this.dateFormat);
+                }
+            } else if (metric.type === 'relative') {
+                this.startDate = moment().subtract(metric.value, metric.unit).format(this.dateFormat);
+                this.endDate = moment().format(this.dateFormat);
+            }
+            this.toggle_range_picker();
         }
-        this.toggle_range_picker();
-      }
     },
   }
 </script>
