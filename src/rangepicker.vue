@@ -166,6 +166,7 @@
             {'name': '本周', 'value': 0, 'unit': 'week', 'type': 'absolute', 'weekFormat': 'isoweek'},
             {'name': '上周', 'value': 1, 'unit': 'week', 'type': 'absolute', 'weekFormat': 'isoweek'},
             {'name': '本月', 'value': 0, 'unit': 'month', 'type': 'absolute', 'weekFormat': 'isoweek'},
+            {'name': '上月', 'value': 1, 'unit': 'month', 'type': 'absolute', 'weekFormat': 'isoweek'},
           ],
           relative: [
             {'name': '过去7天', 'value': 7, 'unit': 'day', 'type': 'relative', 'weekFormat': 'isoweek'},
