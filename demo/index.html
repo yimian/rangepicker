@@ -10,7 +10,7 @@
 <body>
   <div id="rangepicker" style="width: 400px">
     <label for="">选择时间：</label>
-    <rangepicker v-ref:rangepicker :adjust-by="adjustBy" :start-date.sync="startDate" :end-date.sync="endDate" :language="language" :absolute-option="absoluteOption"></rangepicker>
+    <rangepicker v-ref:rangepicker :delay=2 :adjust-by="adjustBy" :start-date.sync="startDate" :end-date.sync="endDate" :language="language" :absolute-option="absoluteOption"></rangepicker>
   </div>
   <script>
     var app = new Vue({
@@ -20,10 +20,10 @@
         startDate: '',
         endDate: '',
         adjustBy: 'week',
-        absoluteOption: [
-            {'name': '上月', 'value': 1, 'unit': 'month', 'type': 'absolute', 'weekFormat': 'isoweek'},
-            {'name': '本季度', 'value': 0, 'unit': 'quarter', 'type': 'absolute', 'weekFormat': 'isoweek'}
-        ]
+//        absoluteOption: [
+//            {'name': '上月', 'value': 1, 'unit': 'month', 'type': 'absolute', 'weekFormat': 'isoweek'},
+//            {'name': '本季度', 'value': 0, 'unit': 'quarter', 'type': 'absolute', 'weekFormat': 'isoweek'}
+//        ]
       },
       components: { rangepicker }
     })
