@@ -1,6 +1,6 @@
 {
   "name": "vue-rangepicker",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "rangepicker component for Vue.js",
   "main": "./dist/rangepicker.js",
   "scripts": {
