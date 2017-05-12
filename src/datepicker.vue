@@ -172,7 +172,7 @@
 
 <template>
     <div class="date-picker">
-        <input type="text" @click="togglePanel" value="{{ range ? value[0] + ' -- ' + value[1] : value }}">
+        <input type="text" @click="togglePanel" value="{{ range ? value[0] + ' -- ' + value[1] : value }}" readonly>
         <div class="date-panel" v-show="panelState" :style="coordinates" transition="toggle">
             <div class="panel-header" v-show="panelType !== 'year'">
                 <div class="arrow-left" @click="prevMonthPreview()">&lt;</div>
